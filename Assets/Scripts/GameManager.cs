@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float effectCooldown = 15f;
 
     private bool firstCall = true;
-    private bool gameOver = false;
+    public bool gameOver = false;
 
     void Start()
     {
@@ -37,13 +37,11 @@ public class GameManager : MonoBehaviour
 
             if (firstCall)
             {
-                Debug.Log("initial cooldown");
                 yield return new WaitForSeconds(5f);
                 firstCall = false;
             }
             else
             {
-                Debug.Log("Cooldown...");
                 yield return new WaitForSeconds(effectCooldown);
             }
 
@@ -61,13 +59,10 @@ public class GameManager : MonoBehaviour
             {
                 enableDisorientation = true;
             }
-            Debug.Log("Losing sense " + senseIndex.ToString() + "for: " + effectDuration.ToString() + " seconds");
-
 
             yield return new WaitForSeconds(effectDuration);
 
             RegainSenses(senseIndex);
-            Debug.Log("senses regained");
         }
     }
 

@@ -155,6 +155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   cooldown: 3
+  pause: 2
+  offset: 4.75
   spawnPoints:
   - {fileID: 1906225030}
   - {fileID: 450329265}
@@ -165,6 +167,7 @@ MonoBehaviour:
   - {fileID: 621832529}
   - {fileID: 477374507}
   spawnPoint: {x: 0, y: 0, z: 0}
+  gameManager: {fileID: 593780345}
 --- !u!1 &450329264
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +267,7 @@ MonoBehaviour:
   enableDisorientation: 0
   effectDuration: 0
   effectCooldown: 15
+  gameOver: 0
 --- !u!4 &593780346
 Transform:
   m_ObjectHideFlags: 0
@@ -868,11 +872,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d5650e54e22d88f4a8accb1a7fc62f06, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.815562
+      value: 5.8155622
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d5650e54e22d88f4a8accb1a7fc62f06, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.367851
+      value: 5.3678546
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d5650e54e22d88f4a8accb1a7fc62f06, type: 3}
       propertyPath: m_LocalRotation.w
