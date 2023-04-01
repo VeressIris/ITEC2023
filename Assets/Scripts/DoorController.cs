@@ -1,32 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DoorController : MonoBehaviour
 {
-    public Animator animator;
-    bool closed = true;
+    private int nextScene;
+
+    [SerializeField] private Animator animator;
+    [SerializeField] private AnimationClip fade;
+    private float animDuration;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
-        closed = true;
+        nextScene = SceneManager.GetActiveScene().buildIndex + 1;
+
+        animDuration = fade.length;
     }
 
-    public void PlayAnim()
+    public IEnumerator LoadNextLevel()
     {
-        if (closed) 
-        {
-            Debug.Log("OPEN DOOR");
-            animator.Play("Door_Open");
-            closed = false;
-        }
-        else
-        {
-            Debug.Log("CLOSE DOOR");
-            animator.Play("Door_Close");
-            closed = true;
-        }
+        animator.Play("FadeToBlack");
+        yield return new WaitForSeconds(animDuration);
+
+        SceneManager.LoadScene(nextScene);
     }
 
     public void PlaySound()
