@@ -15,7 +15,7 @@ public class DoorController : MonoBehaviour
 
     public void PlayAnim()
     {
-        if (closed) 
+        if (closed)
         {
             Debug.Log("OPEN DOOR");
             animator.Play("Door_Open");
@@ -33,5 +33,5 @@ public class DoorController : MonoBehaviour
     {
         //play sound
     }
-    
+
 }

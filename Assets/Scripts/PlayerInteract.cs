@@ -7,11 +7,6 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private float range = 5f;
     [SerializeField] private DoorController doorController;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward * range));

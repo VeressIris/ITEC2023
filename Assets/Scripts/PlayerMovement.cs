@@ -6,9 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     private CharacterController characterController;
     [SerializeField] private float moveSpeed = 10f;
-    
+
     private AudioSource audio;
-    //RANDOM FOOTSTEPS???
     [SerializeField] private AudioClip footstepSound;
 
     void Start()

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class FlashingLight : MonoBehaviour
 {
-    private Animator animator;
+    public Animator animator;
 
     public float triggerTime; //time after which the flashing light is triggered
-    public float duration; //lights off duration
+    private float duration; //lights off duration
     
-    bool canTrigger = true; 
+    public bool triggered = false;
+
+    [SerializeField] private GameManager gameManager;
 
     void Start()
     {
@@ -20,41 +22,15 @@ public class FlashingLight : MonoBehaviour
 
     void Update()
     {
-        if (canTrigger)
+        if (triggered)
         {
-            StartCoroutine(Trigger());
+            animator.Play("Flash");
         }
     }
 
     float SetTime(float minTime, float maxTime)
     {
         return Random.Range(minTime, maxTime);
-    }
-
-    IEnumerator Trigger()
-    {
-        yield return new WaitForSeconds(triggerTime);
-        
-        animator.Play("Flash");
-        
-        if (StoppedPlaying() && canTrigger)
-        {
-            duration = SetTime(20f, 100f);
-            
-            canTrigger = false;
-            
-            StartCoroutine(LightsOff());
-        }
-    }
-
-    IEnumerator LightsOff()
-    {
-        yield return new WaitForSeconds(duration);
-        
-        animator.Play("On");
-
-        canTrigger = true;
-        triggerTime = SetTime(5f, 60f);
     }
 
     bool StoppedPlaying()

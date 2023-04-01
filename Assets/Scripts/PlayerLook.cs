@@ -7,7 +7,9 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private float mouseSens = 100f;
     [SerializeField] private Transform playerBody;
 
-    float xRotation = 0f;
+    private float xRotation = 0f;
+
+    [SerializeField] GameManager gameManager;
 
     void Start()
     {
@@ -21,8 +23,17 @@ public class PlayerLook : MonoBehaviour
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+        if (gameManager.enableDisorientation)
+        {
+            transform.localRotation = Quaternion.Euler(-xRotation, 0f, 0f);
+            playerBody.Rotate(Vector3.up * -mouseX);
+        }
+        else
+        {
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            playerBody.Rotate(Vector3.up * mouseX);
+        }
         
-        playerBody.Rotate(Vector3.up * mouseX);
     }
 }
