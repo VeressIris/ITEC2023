@@ -25,6 +25,7 @@ public class PlayerInteract : MonoBehaviour
             if (hit.collider.tag == "Door" && Input.GetMouseButtonDown(0))
             {
                 doorController.PlayAnim();
+                doorController.PlaySound();
             }
             else if (hit.collider.tag == "Page" && Input.GetMouseButtonDown(0))
             {
