@@ -17,8 +17,12 @@ public class Scalpel : MonoBehaviour
 
     [SerializeField] private GameManager gameManager;
 
+    private AudioSource audioSource;
+
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         StartCoroutine(Animate());
     }
 
@@ -40,6 +44,7 @@ public class Scalpel : MonoBehaviour
             spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + offset, spawnPoint.z);
 
             StartCoroutine(MoveToTarget(spawnPoint));
+            audioSource.Play();
             yield return new WaitForSeconds(pause);
 
             StartCoroutine(MoveToTarget(initialPos));

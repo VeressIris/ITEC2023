@@ -5,13 +5,17 @@ using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
-    public int senseIndex = 0;
+    [SerializeField] private int senseIndex = 0;
     private int maxSenses = 3;
 
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private float targetLowPassVal = 855f;
     private const float MAXLOWPASSVAL = 22000f;
     private float lowPassVal = MAXLOWPASSVAL;
+    
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip shhSFX;
+    [SerializeField] private AudioClip whisperSFX;
 
     [SerializeField] FlashingLight flashlightScript;
 
@@ -25,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         flashlightScript.enabled = false;
 
         StartCoroutine(Game());
@@ -53,6 +59,8 @@ public class GameManager : MonoBehaviour
             }
             else if (senseIndex == 1) //lose hearing
             {
+                audioSource.PlayOneShot(shhSFX);
+                audioSource.PlayOneShot(whisperSFX);
                 AudioMuffle();
             }
             else if (senseIndex == 2) //disorient

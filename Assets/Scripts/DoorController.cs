@@ -7,9 +7,15 @@ public class DoorController : MonoBehaviour
     public Animator animator;
     bool closed = true;
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip closeDoorSFX;
+    [SerializeField] private AudioClip openDoorSFX;
+
     void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        
         closed = true;
     }
 
@@ -17,13 +23,11 @@ public class DoorController : MonoBehaviour
     {
         if (closed)
         {
-            Debug.Log("OPEN DOOR");
             animator.Play("Door_Open");
             closed = false;
         }
         else
         {
-            Debug.Log("CLOSE DOOR");
             animator.Play("Door_Close");
             closed = true;
         }
@@ -31,7 +35,8 @@ public class DoorController : MonoBehaviour
 
     public void PlaySound()
     {
-        //play sound
+        audioSource.clip = closed ? closeDoorSFX : openDoorSFX;
+        audioSource.Play();
     }
 
 }
