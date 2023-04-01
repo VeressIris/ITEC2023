@@ -17,13 +17,11 @@ public class DoorController : MonoBehaviour
     {
         if (closed)
         {
-            Debug.Log("OPEN DOOR");
             animator.Play("Door_Open");
             closed = false;
         }
         else
         {
-            Debug.Log("CLOSE DOOR");
             animator.Play("Door_Close");
             closed = true;
         }

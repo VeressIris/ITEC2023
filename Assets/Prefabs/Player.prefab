@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSens: 250
   playerBody: {fileID: 2497434058457046626}
+  gameManager: {fileID: 0}
 --- !u!114 &2497434058089444651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 5
   doorController: {fileID: 0}
+  pagePickup: {fileID: 8300000, guid: 71ce99dc64002714b86f0279ebca8759, type: 3}
 --- !u!1 &2497434058457046624
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +131,7 @@ GameObject:
   - component: {fileID: 2497434058457046556}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3.5
-  footstepSound: {fileID: 8300000, guid: 1f0199a4c6005ec4abbb302f71bc036d, type: 3}
+  footstepSound: {fileID: 8300000, guid: f0ea48d78b1b710479292bee3f5ca073, type: 3}
 --- !u!82 &2497434058457046556
 AudioSource:
   m_ObjectHideFlags: 0
@@ -192,11 +194,11 @@ AudioSource:
   m_GameObject: {fileID: 2497434058457046624}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: c3e71b812fa391948a0abaeaac3f1100, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 938df53f74d50544b83b2cd1b17069f9, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0.9
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -387,8 +389,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dee6517be1639745bf31a08776e65cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   triggerTime: 5
-  duration: 0
+  triggered: 0
+  gameManager: {fileID: 0}
 --- !u!95 &2497434058634217242
 Animator:
   serializedVersion: 5
