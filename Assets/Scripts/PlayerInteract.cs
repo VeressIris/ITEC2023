@@ -14,7 +14,8 @@ public class PlayerInteract : MonoBehaviour
         {
             if (hit.collider.tag == "Door" && Input.GetMouseButtonDown(0))
             {
-                StartCoroutine(doorController.LoadNextLevel());
+                //play animation
+                doorController.PlayAnim();
             }
             else if (hit.collider.tag == "PowerUp")
             {
