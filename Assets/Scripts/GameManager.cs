@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +28,11 @@ public class GameManager : MonoBehaviour
     private bool firstCall = true;
     public bool gameOver = false;
 
+    bool ok = false;
+
+    [SerializeField] private GameObject black;
+    private Animator fade;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -35,13 +41,17 @@ public class GameManager : MonoBehaviour
 
         effectCooldown = Random.Range(20f, 35f);
 
+        fade = black.GetComponent<Animator>();
+        fade.Play("FadeIn");
+
         StartCoroutine(Game());
     }
 
     void Update()
     {
-        if (gameOver)
+        if (gameOver && !ok)
         {
+            ok = true;
             EndGame();
         }
     }
@@ -107,7 +117,7 @@ public class GameManager : MonoBehaviour
         {
             flashlightScript.animator.Play("TurnOn");
             flashlightScript.triggered = false;
-            flashlightScript.enabled = false;
+            //flashlightScript.enabled = false;
         }
         else if (effect == 1)
         {
@@ -127,9 +137,18 @@ public class GameManager : MonoBehaviour
 
     void EndGame()
     {
-        Debug.Log("YOU REACHED THE END");
-
+        Debug.Log("stopping game");
         StopAllCoroutines();
         RegainSenses(senseIndex);
+
+        StartCoroutine(LoadMenu());
+    }
+
+    IEnumerator LoadMenu()
+    {
+        yield return new WaitForSeconds(4.2f);
+        
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene(0);
     }
 }

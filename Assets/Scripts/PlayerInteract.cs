@@ -15,9 +15,13 @@ public class PlayerInteract : MonoBehaviour
     public bool powerupPickedUp = false;
     [SerializeField] private GameManager gameManager;
 
+    [SerializeField] private GameObject arrows;
+
     void Start()
     {
         audioSource = GetComponentInParent<AudioSource>();
+
+        arrows.SetActive(false);
     }
 
     void Update()
@@ -33,8 +37,12 @@ public class PlayerInteract : MonoBehaviour
             else if (hit.collider.tag == "Page" && Input.GetMouseButtonDown(0))
             {
                 gameManager.effectCooldown = 0f;
+                
                 audioSource.PlayOneShot(pagePickup);
+                
                 pageUI.SetActive(true);
+                arrows.SetActive(true);
+
                 Destroy(hit.collider.gameObject);
             }
         }

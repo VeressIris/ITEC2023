@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Scalpel : MonoBehaviour
 {
@@ -20,10 +21,15 @@ public class Scalpel : MonoBehaviour
 
     [SerializeField] private Transform player;
 
+    [SerializeField] private GameObject black;
+    private Animator fade;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         
+        fade = black.GetComponent<Animator>();
+
         StartCoroutine(Animate());
     }
 
@@ -110,5 +116,22 @@ public class Scalpel : MonoBehaviour
         {
             spawnPoint = spawnPoints[index].transform.position;
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("DEAD");
+            StartCoroutine(Die());
+        }
+    }
+
+    IEnumerator Die()
+    {
+        //play death sound
+        fade.Play("FadeToBlack");
+        yield return null;
+        SceneManager.LoadScene(1);
     }
 }
