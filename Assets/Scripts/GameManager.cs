@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool enableDisorientation = false;
 
-    public float effectDuration;
-    private float effectCooldown;
+    private float effectDuration;
+    public float effectCooldown;
 
     private bool firstCall = true;
     public bool gameOver = false;

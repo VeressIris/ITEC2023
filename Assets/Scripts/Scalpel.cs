@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
-//using static UnityEngine.GraphicsBuffer;
 
 public class Scalpel : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
+    private float speed = 5f;
     [SerializeField] private float cooldown = 10f;
-    [SerializeField] private float pause = 2f;
+    private float pause = 2f;
 
     [SerializeField] GameObject[] spawnPoints;
     public Vector3 spawnPoint;
@@ -19,17 +18,13 @@ public class Scalpel : MonoBehaviour
 
     private AudioSource audioSource;
 
+    [SerializeField] private Transform player;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         
         StartCoroutine(Animate());
-    }
-
-    void PickPoint()
-    {
-        int index = Random.Range(0, spawnPoints.Length);
-        spawnPoint = spawnPoints[index].transform.position;
     }
 
     IEnumerator Animate()
@@ -41,6 +36,9 @@ public class Scalpel : MonoBehaviour
             //move object to chosen spawn point to line up the x and z values so it doesn't move diagonally
             transform.position = spawnPoint;
             initialPos = transform.position;
+
+            //offset spawnpoint Y position so the knife moves downwards
+            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y - 7.4f, spawnPoint.z);
 
             StartCoroutine(MoveToTarget(spawnPoint));
             audioSource.Play();
@@ -71,5 +69,46 @@ public class Scalpel : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    int ClosestPoint()
+    {
+        float minDistance = 0;
+        int ans = 0;
+
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            float distance = Vector3.Distance(transform.position, player.position);
+            if (minDistance < distance)
+            {
+                minDistance = distance;
+                ans = i;
+            }
+        }
+        
+        return ans;
+    }
+
+    void PickPoint()
+    {
+        int index = ClosestPoint();
+        if (isPair(spawnPoints[index]))
+        {
+            Vector3 point1 = spawnPoints[index].transform.position;
+            Vector3 point2 = spawnPoints[index + 1].transform.position;
+
+            if (point1.x == point2.x)
+            {
+                spawnPoint = new Vector3(point1.x, point1.y, Random.Range(point1.z, point2.z));
+            }
+            else if (point1.z == point2.z)
+            {
+                spawnPoint = new Vector3(Random.Range(point1.x, point2.x), point1.y, point1.z);
+            }
+        }
+        else
+        {
+            spawnPoint = spawnPoints[index].transform.position;
+        }
     }
 }

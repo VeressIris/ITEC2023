@@ -13,6 +13,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private GameObject pageUI;
 
     public bool powerupPickedUp = false;
+    [SerializeField] private GameManager gameManager;
 
     void Start()
     {
@@ -31,7 +32,7 @@ public class PlayerInteract : MonoBehaviour
             }
             else if (hit.collider.tag == "Page" && Input.GetMouseButtonDown(0))
             {
-                powerupPickedUp = true;
+                gameManager.effectCooldown = 0f;
                 audioSource.PlayOneShot(pagePickup);
                 pageUI.SetActive(true);
                 Destroy(hit.collider.gameObject);
