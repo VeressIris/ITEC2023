@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
         flashlightScript.enabled = false;
 
-        effectCooldown = Random.Range(20f, 35f);
+        effectCooldown = Random.Range(10f, 20f);
 
         fade = black.GetComponent<Animator>();
         fade.Play("FadeIn");
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
 
     float SetDuration()
     {
-        return Random.Range(20f, 50f);
+        return Random.Range(20f, 35f);
     }
 
     void EndGame()
