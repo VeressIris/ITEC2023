@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool enableDisorientation = false;
 
     public float effectDuration;
-    [SerializeField] private float effectCooldown = 15f;
+    private float effectCooldown;
 
     private bool firstCall = true;
     public bool gameOver = false;
@@ -33,13 +33,25 @@ public class GameManager : MonoBehaviour
 
         flashlightScript.enabled = false;
 
+        effectCooldown = Random.Range(20f, 35f);
+
         StartCoroutine(Game());
     }
+
+    void Update()
+    {
+        if (gameOver)
+        {
+            EndGame();
+        }
+    }
+
     IEnumerator Game()
     {   
         while(!gameOver)
         {
             senseIndex = Random.Range(0, maxSenses);
+            effectCooldown = Random.Range(20f, 35f);
 
             if (firstCall)
             {
@@ -111,5 +123,13 @@ public class GameManager : MonoBehaviour
     float SetDuration()
     {
         return Random.Range(20f, 50f);
+    }
+
+    void EndGame()
+    {
+        Debug.Log("YOU REACHED THE END");
+
+        StopAllCoroutines();
+        RegainSenses(senseIndex);
     }
 }

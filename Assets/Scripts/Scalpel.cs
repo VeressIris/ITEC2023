@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+//using static UnityEngine.GraphicsBuffer;
 
 public class Scalpel : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float cooldown = 10f;
     [SerializeField] private float pause = 2f;
-    [SerializeField] private float offset = 5f;
 
-    [SerializeField] Transform[] spawnPoints;
+    [SerializeField] GameObject[] spawnPoints;
     public Vector3 spawnPoint;
     private Vector3 initialPos;
 
@@ -22,14 +22,14 @@ public class Scalpel : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-
+        
         StartCoroutine(Animate());
     }
 
     void PickPoint()
     {
         int index = Random.Range(0, spawnPoints.Length);
-        spawnPoint = spawnPoints[index].position;
+        spawnPoint = spawnPoints[index].transform.position;
     }
 
     IEnumerator Animate()
@@ -38,10 +38,9 @@ public class Scalpel : MonoBehaviour
         {
             PickPoint();
 
-            SetPosition();
+            //move object to chosen spawn point to line up the x and z values so it doesn't move diagonally
+            transform.position = spawnPoint;
             initialPos = transform.position;
-            
-            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + offset, spawnPoint.z);
 
             StartCoroutine(MoveToTarget(spawnPoint));
             audioSource.Play();
@@ -65,9 +64,12 @@ public class Scalpel : MonoBehaviour
         }
     }
 
-    //move object to chosen spawn point to line up the x and z values so it doesn't move diagonally
-    void SetPosition()
+    bool isPair(GameObject obj)
     {
-        transform.position = new Vector3(spawnPoint.x, spawnPoint.y + 11, spawnPoint.z);
+        if (obj.name.Contains("Begin") || obj.name.Contains("End"))
+        {
+            return true;
+        }
+        return false;
     }
 }

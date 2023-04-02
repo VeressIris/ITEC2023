@@ -12,6 +12,8 @@ public class PlayerInteract : MonoBehaviour
 
     [SerializeField] private GameObject pageUI;
 
+    public bool powerupPickedUp = false;
+
     void Start()
     {
         audioSource = GetComponentInParent<AudioSource>();
@@ -29,6 +31,7 @@ public class PlayerInteract : MonoBehaviour
             }
             else if (hit.collider.tag == "Page" && Input.GetMouseButtonDown(0))
             {
+                powerupPickedUp = true;
                 audioSource.PlayOneShot(pagePickup);
                 pageUI.SetActive(true);
                 Destroy(hit.collider.gameObject);
